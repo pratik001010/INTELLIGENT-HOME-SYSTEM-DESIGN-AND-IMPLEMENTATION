@@ -11,6 +11,12 @@ This project demonstrates how embedded systems, sensor networks, and intelligent
        style="object-fit:cover;border-radius:10px;"/>
 </p>
 
+   <p align="center">
+  <img src="https://github.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/blob/0b1e670df23cef9e7f049d1e49f619f0ed5c5a53/Untitled%20video%20-%20Made%20with%20Clipchamp%20(1).gif" width="250" alt="Intelligent Home System Demo"/>
+</p>
+
+
+
 ---
 
 ## 🧠 System Concept
