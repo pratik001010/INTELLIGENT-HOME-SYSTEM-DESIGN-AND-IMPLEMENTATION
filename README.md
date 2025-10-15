@@ -4,16 +4,31 @@ The **Intelligent Home System** is a **smart**, **secure**, and **energy-efficie
 
 For **security and interactivity**, the system combines **RFID** and **AS608 fingerprint authentication** with real-time **ESP32-CAM surveillance**, allowing **remote viewing** and **pan-tilt control** through a **web interface**. The **offline voice recognition module (DFRobot Gravity)** introduces a fully **voice-driven control mode**, where users can manage **all major functionalities** — including lights, fans, windows, doors, and other connected devices — through spoken commands without relying on an internet connection. A **wake-up phrase (“Intelligent Home Design”)** activates the voice mode, followed by direct verbal instructions to control specific systems. The setup also integrates a **DFPlayer Mini with an SD card and speaker**, providing **audio playback feedback** that confirms recognized commands and system actions. Together, these technologies form a **reliable** and **intelligent framework** that enhances **home safety**, **energy efficiency**, and **user convenience**.
 
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/7e6efa735bccb3480ec767294fb9276b9885bc20/frontview.jpg" 
+           alt="Front View of Intelligent Home System" 
+           width="450"/>
+    </td>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/74869784f39ebad32bbad749d43681cdf4ec9ef7/back%20biew.jpg" 
+           alt="Back View of Intelligent Home System" 
+           width="450"/>
+    </td>
+  </tr>
+</table>
+
+<p align="center"><em>Front and Back Views of the Intelligent Home System Prototype</em></p>
+
 <p align="center">
-  <img src="https://raw.githubusercontent.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/7e6efa735bccb3480ec767294fb9276b9885bc20/frontview.jpg"
-       alt="Front View of Intelligent Home System"
-       width="700"
-       style="object-fit: cover; border-radius: 10px;"/>
+  <img src="https://raw.githubusercontent.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/74869784f39ebad32bbad749d43681cdf4ec9ef7/topview.jpg" 
+       alt="Top View of Intelligent Home System" 
+       width="700"/>
+  <br>
+  <em>Top View of the Intelligent Home System Prototype</em>
 </p>
 
-   <p align="center">
-  <img src="https://github.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/blob/0b1e670df23cef9e7f049d1e49f619f0ed5c5a53/Untitled%20video%20-%20Made%20with%20Clipchamp%20(1).gif" width="250" alt="Intelligent Home System Demo"/>
-</p>
 
 
 
@@ -36,6 +51,23 @@ It performs four major tasks:
 ### 🌤️ 1. Weather-Responsive Environment
 - **Lighting Control:**  
   A **Light Dependent Resistor (LDR)** monitors ambient brightness. When light levels fall below a threshold, the **WS2812B RGB LED** strip turns on automatically, simulating smart lighting behavior.
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/cbf8ef11208d18b8b9f2603323c26deaeb79d5a9/light%20systems.png" 
+           alt="Light Control System Diagram and LDR Test" 
+           width="380"/>
+      <p><em>Function of WS2812B LED in response to light intensity from LDR</em></p>
+    </td>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/cbf8ef11208d18b8b9f2603323c26deaeb79d5a9/Untitled%20video%20-%20Made%20with%20Clipchamp%20(1).gif" 
+           alt="Light System Demonstration GIF" 
+           width="380"/>
+      <p><em>Automatic lighting response demonstration</em></p>
+    </td>
+  </tr>
+</table>
+
 - **Temperature-Based Cooling:**  
   A **DHT11** sensor tracks room temperature. When temperature ≥ 28°C, a **DC fan** (driven by an **L9110 H-bridge motor driver**) activates automatically.
 - **Rain Detection & Ventilation:**  
