@@ -1,8 +1,8 @@
 # 🏠 Intelligent Home System — Design & Implementation
 
-A **smart, secure, and energy-efficient home automation prototype** integrating multiple subsystems — weather-based control, biometric and RFID security, hazard detection, and multi-mode control — all coordinated through an **Arduino Mega 2560** master controller.
+The **Intelligent Home System** is a **smart**, **secure**, and **energy-efficient** home automation prototype built around the **Arduino Mega 2560** as the **central controller**. It integrates multiple subsystems including **weather-based control**, **biometric and RFID security**, and **hazard detection** to create an **adaptive environment** that responds dynamically to both **user input** and **environmental conditions**. Through sensors like the **LDR**, **DHT11**, and **YL83 rain module**, the system **autonomously manages lighting, ventilation, and cooling** to maintain comfort while minimizing energy use.
 
-This project demonstrates how embedded systems, sensor networks, and intelligent decision-making can together create an adaptive living environment that responds to both **human commands** and **environmental conditions**.
+For **security and interactivity**, the system combines **RFID** and **AS608 fingerprint authentication** with real-time **ESP32-CAM surveillance**, allowing **remote viewing** and **pan-tilt control** through a **web interface**. The **offline voice recognition module (DFRobot Gravity)** introduces a fully **voice-driven control mode**, where users can manage **all major functionalities** — including lights, fans, windows, doors, and other connected devices — through spoken commands without relying on an internet connection. A **wake-up phrase (“Intelligent Home Design”)** activates the voice mode, followed by direct verbal instructions to control specific systems. The setup also integrates a **DFPlayer Mini with an SD card and speaker**, providing **audio playback feedback** that confirms recognized commands and system actions. Together, these technologies form a **reliable** and **intelligent framework** that enhances **home safety**, **energy efficiency**, and **user convenience**.
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/<your_username>/Intelligent-Home-System/main/docs/images/overview.jpg" 
@@ -70,11 +70,54 @@ Three operating modes allow flexible control and fault tolerance:
 
 ---
 
-## 🔩 Hardware Architecture
+## 🔩  System Architecture
 
-**Main Controller:** Arduino Mega 2560  
-**Communication Interfaces:** SPI, UART, I²C, PWM
+### ⚙️ Microcontroller & Interfaces
+- **MCU:** Arduino Mega 2560  
+- **Communication Buses:**  
+  - **I²C:** LCD (16x2 with backpack)  
+  - **SPI:** RFID (MFRC522)  
+  - **UART:** Fingerprint Sensor (AS608) and Voice Module  
+  - **PWM:** Servos, WS2812B LEDs, and Fan Driver
 
+---
+
+### 🧩 Sensor–Actuator Mapping
+
+| Sensor / Module | Pin Connection | Actuator / Output | Function |
+|-----------------|----------------|-------------------|-----------|
+| **LDR (Light Sensor)** | A0 | WS2812B RGB LED (DIN) | Auto room lighting based on ambient light |
+| **DHT11 (Temp/Humidity)** | D8 | Fan via L9110 (D9, D10) | Automatic cooling when temperature ≥ threshold |
+| **Rain Sensor (YL-83)** | A1 | Window Servo (D7) | Closes window during rain |
+| **RFID (MFRC522)** | SPI pins | Door Servo | Opens door when authorized tag detected |
+| **Fingerprint Sensor (AS608)** | Serial (TX2/RX2) | Door Servo + LCD (SDA, SCL) | Biometric access control and status display |
+| **Gas Sensor (MQ-135)** | A2 (example) | Buzzer + WS2812B alert | Triggers alarm and red warning lights during gas leak |
+| **IR Receiver** | D11 (example) | — | IR remote-based control (Mode 2) |
+| **ESP32-CAM** | Wi-Fi | Pan/Tilt Servos | Wireless surveillance with live streaming |
+| **Voice Module (DFRobot Gravity)** | UART | Multiple devices | Offline voice control (Mode 3) |
+
+---
+
+### 🔗 Data Flow Overview
+
+[Sensors] → [Arduino Mega 2560] → [Decision Logic] → [Actuators / Outputs]
+
+Each sensor continuously feeds data to the Mega.  
+Depending on the selected **control mode**, the system decides whether to:
+- Act automatically (weather-based)
+- Respond to IR remote input
+- Execute voice commands
+
+Outputs like LEDs, fans, and servos are driven through PWM or digital pins accordingly.
+
+---
+
+### 🧠 Functional Summary
+- **Autonomous Mode:** Weather and environment-driven control.  
+- **Manual Mode (IR):** Direct user control via remote.  
+- **Voice Mode:** Wake-word activation + command recognition.  
+- **Security Layer:** RFID & fingerprint double authentication.  
+- **Safety Layer:** Gas & smoke monitoring with audible + visual alerts.
 
 > Separate power supplies for **logic** and **motors/servos** to prevent brownout or reset during high current draw.
 
