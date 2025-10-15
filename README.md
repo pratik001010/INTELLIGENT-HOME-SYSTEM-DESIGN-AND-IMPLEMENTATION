@@ -48,7 +48,7 @@ It performs four major tasks:
 
 ## ⚙️ Key Features Explained
 
-### 🌤️ 1. Weather-Responsive Environment
+### 🌤️ 1. Weather Analysis and Control
 - **Lighting Control:**  
   A **Light Dependent Resistor (LDR)** monitors ambient brightness. When light levels fall below a threshold, the **WS2812B RGB LED** strip turns on automatically, simulating smart lighting behavior.
 <table align="center">
@@ -70,8 +70,50 @@ It performs four major tasks:
 
 - **Temperature-Based Cooling:**  
   A **DHT11** sensor tracks room temperature. When temperature ≥ 28°C, a **DC fan** (driven by an **L9110 H-bridge motor driver**) activates automatically.
+  <p align="center">
+  <img src="https://raw.githubusercontent.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/2ee41b3eb348e5597bb24a2325e2f8cfb49d672f/cooling%20systems.png" 
+       alt="Cooling System Diagram and DHT11 Temperature Control" 
+       width="500"/>
+  <br>
+  <em>Automatic cooling system controlled by DHT11 temperature readings</em>
+</p>
+
+  
 - **Rain Detection & Ventilation:**  
   A **YL-83 rain sensor** detects precipitation. If rain is detected, a **servo motor** automatically closes the window to prevent interior damage.
+  <table align="center">
+  <tr>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/c8301b7aafbd698fb00145eb322963f945926357/precipitation.png" 
+           alt="Precipitation Detection Diagram and YL-83 Rain Sensor Test" 
+           width="380"/>
+      <p><em>Rain detection and automatic window control using YL-83 sensor</em></p>
+    </td>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/c8301b7aafbd698fb00145eb322963f945926357/precipitation.gif" 
+           alt="Precipitation System Demonstration GIF" 
+           width="380"/>
+      <p><em>Real-time precipitation response demonstration</em></p>
+    </td>
+  </tr>
+</table>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/4a0e1f9312deb889f0706c540b4c75773fbc9334/control%20weather.png" 
+       alt="Weather Analysis and Control Flow Diagram" 
+       width="650"/>
+  <br>
+  <em>Flow diagram of weather analysis and control logic</em>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/4a0e1f9312deb889f0706c540b4c75773fbc9334/circuit%20diagram%20weather%20control.png" 
+       alt="Weather Control Circuit Diagram using Arduino Mega" 
+       width="650"/>
+  <br>
+  <em>Circuit diagram of the weather control subsystem using Arduino Mega 2560</em>
+</p>
+
 
 ### 🔐 2. Security & Access System
 - **RFID Authentication:**  
