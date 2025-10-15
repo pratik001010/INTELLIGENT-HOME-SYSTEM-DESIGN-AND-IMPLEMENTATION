@@ -143,12 +143,65 @@ Hence, if the TFID reader recognizes one of these two known IDs then the doorope
 </table>
 
 - **Fingerprint Access (AS608):**  
-  Provides biometric verification for enhanced security, working in parallel with RFID for dual validation.
-- **ESP32-CAM Integration:**  
-  Streams real-time video via local Wi-Fi. Two **SG90 servos** allow pan and tilt, enabling flexible surveillance through a simple web interface.
-- **Status Feedback:**  
-  A **16×2 I²C LCD** displays system status, operation mode, and authentication results in real time.
+  Provides biometric verification for enhanced security, working in parallel with RFID for dual validation. Users can register their fingerprints, and the sensor compares the scanned fingerprint with stored templates to authenticate and unlock the door. It first checks if the fingerprint sensor successfully captures an image of the fingerprint (finger.getImage()).If the image is captured successfully, it converts the image into a template (finger.image2Tz()).Then, it searches for a matching fingerprint template stored in the sensor's memory (finger.fingerSearch()). If a match is found, it proceeds to open the door (OpenDoor()), delays for 2 seconds, and then closes the door (CloseDoor()).
 
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/bb112b8c21211a7c4c634059c6e7075f03ddcc78/fingerprint.png" 
+           alt="Fingerprint authentication flow and system" 
+           width="380"/>
+      <p><em>Function of door servo in response to stored fingerprint matches</em></p>
+    </td>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/bb112b8c21211a7c4c634059c6e7075f03ddcc78/fingerunlock.gif" 
+           alt="Fingerprint door unlock demonstration" 
+           width="380"/>
+      <p><em>Real-time fingerprint-based door unlocking demonstration</em></p>
+    </td>
+  </tr>
+</table>
+
+- **ESP32-CAM Surveillance Module:**  
+  We'll install the ESP32-CAM on a pan-and-tilt stand with SG90 servo motors for outdoor surveillance. This setup allows for adjustable camera positioning both vertically and horizontally.  The ESP32-CAM acts as a web server, providing live video streaming and servo motor control through a user-friendly interface. Servo motors enable precise camera movements, controlled via PWM signals. The ESP32Servo library simplifies motor control directly from the ESP32-CAM. Adding an external antenna enhances range and connection stability.Streams real-time video via local Wi-Fi. Two **SG90 servos** allow pan and tilt, enabling flexible surveillance through a simple web interface. 
+
+
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/264e21ee44a26a3afc342828cedd5409240274de/ESp32-cam.png" 
+           alt="ESP32-CAM Circuit Diagram" 
+           width="300"/>
+      <p><em>ESP32-CAM wiring with dual-servo pan-tilt mechanism</em></p>
+    </td>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/264e21ee44a26a3afc342828cedd5409240274de/esp32cam2.jpg" 
+           alt="ESP32-CAM hardware module" 
+           width="300"/>
+      <p><em>Assembled ESP32-CAM module with antenna and control board</em></p>
+    </td>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/264e21ee44a26a3afc342828cedd5409240274de/esp32cam1.png" 
+           alt="ESP32-CAM pan and tilt labeled" 
+           width="300"/>
+      <p><em>Pan–tilt orientation for real-time visual coverage</em></p>
+    </td>
+  </tr>
+</table>
+
+
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/5786c3dfcfcf86a558dd6ad21f639e6e1912586b/ui%20esp32%20cam.png" 
+           alt="ESP32-CAM Web Interface for surveillance control" 
+           width="700"/>
+      <p><em>Web interface for ESP32-CAM control with adjustable resolution, FPS, quality, microphone gain, and real-time pan–tilt adjustments</em></p>
+    </td>
+  </tr>
+</table>
+
+---
 ### 🚨 3. Hazard Detection & Safety Response
 - The **MQ-135 sensor** continuously measures air quality.  
   When dangerous gases (smoke, CO₂, LPG) exceed the threshold:
@@ -156,7 +209,16 @@ Hence, if the TFID reader recognizes one of these two known IDs then the doorope
   - **WS2812B LEDs** switch to red for visual warning.  
   - **Ventilation servos** automatically open windows to allow gas escape.  
 This ensures a prompt reaction to fire or toxic gas incidents.
-
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/537dd456379edee0a5523072c494f3241ace59d8/fire%20hazard.png" 
+           alt="Fire and gas hazard detection system" 
+           width="700"/>
+      <p><em>Function of MQ-135 gas sensor and alert mechanism for fire and smoke hazard detection</em></p>
+    </td>
+  </tr>
+</table>
 ### 🎙️ 4. Control Modes
 Three operating modes allow flexible control and fault tolerance:
 
