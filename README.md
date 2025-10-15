@@ -119,7 +119,12 @@ It performs four major tasks:
 Ensuring home security is crucial in today's environment, where burglary and unauthorized access pose significant threats. A comprehensive security setup includes a door locking system and outdoor surveillance. Smart locks with biometric authentication and remote access control, along with sensors, regulate access effectively. Integration with home automation platforms enables seamless management and monitoring. Components like the **ESP32 cam for outdoor surveillance, RFID card reader, and fingerprint scanner provide multiple layers of authentication and surveillance**. These features create a robust security infrastructure, combining advanced technology with user-friendly features for optimal protection.
 
 - **RFID Authentication:**  
-  The **MFRC522 module** scans RFID tags/cards. Registered UIDs are matched in EEPROM; on successful authentication, the **door servo motor** rotates to unlock.
+  The **MFRC522 module** scans RFID tags/cards. Registered UIDs are matched in EEPROM; on successful authentication, the **door servo motor** rotates to unlock. For our project we have used both TFID card and tag with the corresponding hex values:
+byte knownID1[] = {0xF3, 0x1D, 0x68, 0xA6}; // TFID CARD 1 ...................                                                                                                                               byte knownID2[] = {0x2A, 0xE3, 0x0F, 0x0B}; // TFID TAG  2
+
+Hence, if the TFID reader recognizes one of these two known IDs then the dooropen();    function is called and after 2 seconds doorclose() function is called.
+
+
   <table align="center">
   <tr>
     <td align="center">
