@@ -5,10 +5,10 @@ The **Intelligent Home System** is a **smart**, **secure**, and **energy-efficie
 For **security and interactivity**, the system combines **RFID** and **AS608 fingerprint authentication** with real-time **ESP32-CAM surveillance**, allowing **remote viewing** and **pan-tilt control** through a **web interface**. The **offline voice recognition module (DFRobot Gravity)** introduces a fully **voice-driven control mode**, where users can manage **all major functionalities** — including lights, fans, windows, doors, and other connected devices — through spoken commands without relying on an internet connection. A **wake-up phrase (“Intelligent Home Design”)** activates the voice mode, followed by direct verbal instructions to control specific systems. The setup also integrates a **DFPlayer Mini with an SD card and speaker**, providing **audio playback feedback** that confirms recognized commands and system actions. Together, these technologies form a **reliable** and **intelligent framework** that enhances **home safety**, **energy efficiency**, and **user convenience**.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/<your_username>/Intelligent-Home-System/main/docs/images/overview.jpg" 
-       alt="Intelligent Home System Overview" 
-       width="720"
-       style="object-fit:cover;border-radius:10px;"/>
+  <img src="https://raw.githubusercontent.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/7e6efa735bccb3480ec767294fb9276b9885bc20/frontview.jpg"
+       alt="Front View of Intelligent Home System"
+       width="700"
+       style="object-fit: cover; border-radius: 10px;"/>
 </p>
 
    <p align="center">
