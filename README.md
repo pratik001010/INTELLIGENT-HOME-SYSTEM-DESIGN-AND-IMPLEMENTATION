@@ -116,8 +116,27 @@ It performs four major tasks:
 
 
 ### 🔐 2. Security & Access System
+Ensuring home security is crucial in today's environment, where burglary and unauthorized access pose significant threats. A comprehensive security setup includes a door locking system and outdoor surveillance. Smart locks with biometric authentication and remote access control, along with sensors, regulate access effectively. Integration with home automation platforms enables seamless management and monitoring. Components like the **ESP32 cam for outdoor surveillance, RFID card reader, and fingerprint scanner provide multiple layers of authentication and surveillance**. These features create a robust security infrastructure, combining advanced technology with user-friendly features for optimal protection.
+
 - **RFID Authentication:**  
   The **MFRC522 module** scans RFID tags/cards. Registered UIDs are matched in EEPROM; on successful authentication, the **door servo motor** rotates to unlock.
+  <table align="center">
+  <tr>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/2a2d4556eb88627099014ac36ef458de716e8a53/RFID.png" 
+           alt="RFID Door Lock Flow and Setup" 
+           width="380"/>
+      <p><em>Function of door servo in response to RFID card or tag detection</em></p>
+    </td>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/2a2d4556eb88627099014ac36ef458de716e8a53/RFID.gif" 
+           alt="RFID Door Lock Demonstration GIF" 
+           width="380"/>
+      <p><em>Real-time RFID door lock operation demonstration</em></p>
+    </td>
+  </tr>
+</table>
+
 - **Fingerprint Access (AS608):**  
   Provides biometric verification for enhanced security, working in parallel with RFID for dual validation.
 - **ESP32-CAM Integration:**  
