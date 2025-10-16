@@ -34,7 +34,7 @@ For **security and interactivity**, the system combines **RFID** and **AS608 fin
 
 ---
 
-## 🧠 System Concept
+##  System Concept
 
 The **Intelligent Home System** was designed with the idea of combining **automation, safety, and interaction** within a unified embedded framework.  
 It performs four major tasks:
@@ -48,7 +48,7 @@ It performs four major tasks:
 
 ## ⚙️ Key Features Explained
 
-### 🌤️ 1. Weather Analysis and Control
+###  1. Weather Analysis and Control
 - **Lighting Control:**  
   A **Light Dependent Resistor (LDR)** monitors ambient brightness. When light levels fall below a threshold, the **WS2812B RGB LED** strip turns on automatically, simulating smart lighting behavior.
 <table align="center">
@@ -115,7 +115,7 @@ It performs four major tasks:
 </p>
 
 
-### 🔐 2. Security & Access System
+###  2. Security & Access System
 Ensuring home security is crucial in today's environment, where burglary and unauthorized access pose significant threats. A comprehensive security setup includes a door locking system and outdoor surveillance. Smart locks with biometric authentication and remote access control, along with sensors, regulate access effectively. Integration with home automation platforms enables seamless management and monitoring. Components like the **ESP32 cam for outdoor surveillance, RFID card reader, and fingerprint scanner provide multiple layers of authentication and surveillance**. These features create a robust security infrastructure, combining advanced technology with user-friendly features for optimal protection.
 
 - **RFID Authentication:**  
@@ -202,7 +202,7 @@ Hence, if the TFID reader recognizes one of these two known IDs then the doorope
 </table>
 
 ---
-### 🚨 3. Hazard Detection & Safety Response
+###  3. Hazard Detection & Safety Response
 - The **MQ-135 sensor** continuously measures air quality.  
   When dangerous gases (smoke, CO₂, LPG) exceed the threshold:
   - A **buzzer** activates to alert occupants.  
@@ -244,20 +244,263 @@ This ensures a prompt reaction to fire or toxic gas incidents.
 
 ---
 
-### 🎙️ 4. Control Modes
-Three operating modes allow flexible control and fault tolerance:
 
-| Mode | Description | Control Hardware |
-|------|--------------|------------------|
-| **Mode 1 – Autonomous** | Default automatic operation responding to environment (LDR, DHT11, Rain). | Sensors only |
-| **Mode 2 – IR Remote** | Manual override using IR remote. | IR receiver + remote |
-| **Mode 3 – Voice Command** | Offline voice recognition via DFRobot Gravity module. Triggered by wake word *“Intelligent Home Design.”* | Voice module + mic |
+##  4. Control Modes
+
+<p>Three operating modes give your system flexibility, accessibility, and a safe manual override path. The controller exposes a single <code>control</code> variable to switch modes: <code>1 = Autonomous</code>, <code>2 = IR Remote</code>, <code>3 = Voice</code>.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Mode</th>
+      <th>Description</th>
+      <th>Control Hardware</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Mode 1 – Autonomous</strong></td>
+      <td>
+        Default closed-loop behavior using environment sensors. Lighting reacts to <strong>LDR</strong>, cooling uses <strong>DHT11</strong> temperature/humidity, and window/door safety actions respond to <strong>rain</strong> and <strong>MQ-135</strong> (hazard) thresholds. 
+        Typical actions:
+        <ul>
+          <li>Low light → WS2812B LEDs ON; bright light → OFF</li>
+          <li>Temp &gt; threshold (e.g., 28 °C) → Fan ON via L9110; else OFF</li>
+          <li>Rain &gt; threshold → Window CLOSE (servo); clear → OPEN</li>
+          <li>Gas/smoke detected → Buzzer alarm + red LEDs + auto OPEN door/window for evacuation</li>
+        </ul>
+        Runs hands-free for energy efficiency, comfort, and safety.
+      </td>
+      <td>Sensors only (LDR, DHT11, Rain, MQ-135)</td>
+    </tr>
+    <tr>
+      <td><strong>Mode 2 – IR Remote</strong></td>
+      <td>
+        Manual override with an IR handset. The <strong>1838 IR receiver</strong> demodulates 38 kHz codes and the Mega executes mapped actions (lights, fan, window, door). Useful for testing, calibration, or when you want to bypass sensors temporarily.
+        <ul>
+          <li><em>Power</em> → enable manual IR mode</li>
+          <li><em>Menu</em> → return to Autonomous</li>
+          <li>Numbered buttons → on/off or open/close per device mapping</li>
+        </ul>
+        Each action can play a short voice prompt via the <strong>DFMini MP3</strong> for feedback (e.g., “LIGHTS ON”).
+      </td>
+      <td>IR receiver + remote (+ DFMini MP3 for audio)</td>
+    </tr>
+    <tr>
+      <td><strong>Mode 3 – Voice Command</strong></td>
+      <td>
+        Offline voice control using the <strong>DFRobot Gravity voice module</strong> (wake word + fixed/custom commands). After the wake phrase (e.g., “<em>Intelligent Home Design</em>”), supported commands toggle devices hands-free—no internet required.
+        <ul>
+          <li>Wake word → activate listening</li>
+          <li>“Open window / Close window / Lights on / Fan off …” → direct actions</li>
+          <li>Custom phrases (up to 17) can be learned for your project vocabulary</li>
+        </ul>
+        Great for accessibility and when the remote isn’t handy.
+      </td>
+      <td>Voice module + microphones (+ optional speaker)</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+
+
+##  IR Remote Control Operation
+
+<p>
+The <strong>IR remote control</strong> mode provides manual override functionality, allowing users to control lighting, fan, window, and door actions conveniently without depending on sensors. It operates through a 38 kHz IR receiver module that decodes hex signals from the remote and triggers corresponding functions on the Arduino Mega. The <strong>DFMini MP3 module</strong> provides audio feedback, confirming each action through short voice prompts such as <em>“LIGHT ON”</em> or <em>“WINDOW CLOSED.”</em>
+</p>
 
 ---
 
-## 🔩  System Architecture
+###  Button Configuration and Demonstration
 
-### ⚙️ Microcontroller & Interfaces
+<p align="center">
+  <table>
+    <tr>
+      <td align="center" width="50%">
+        <img src="https://github.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/blob/35db6c3700ef566d4cfaaa429a52efc4b917ecd7/IR1.png" width="500" alt="IR Remote Button Configuration"/>
+        <br><em>IR Remote Button Mapping and Hex Code Reference</em>
+      </td>
+      <td align="center" width="50%">
+        <img src="https://github.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/blob/35db6c3700ef566d4cfaaa429a52efc4b917ecd7/IR2.png" width="460" alt="IR Remote Control Demonstration"/>
+        <br><em>IR Remote Control Demonstration and LCD Display Feedback</em>
+      </td>
+    </tr>
+  </table>
+</p>
+
+---
+
+###  IR Control Logic Flow
+
+<p align="center">
+  <table>
+    <tr>
+      <td align="center" width="50%">
+        <img src="https://github.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/blob/35db6c3700ef566d4cfaaa429a52efc4b917ecd7/IRflow1.png" width="430" alt="IR Remote Flowchart 1"/>
+      </td>
+      <td align="center" width="50%">
+        <img src="https://github.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/blob/35db6c3700ef566d4cfaaa429a52efc4b917ecd7/IRflow2.png" width="430" alt="IR Remote Flowchart 2"/>
+      </td>
+    </tr>
+  </table>
+  <em>IR decoding and control logic flow for mode activation and device control.</em>
+</p>
+
+---
+
+###  Working Description
+
+- **Activation / Deactivation**  
+  -  **Power button (0xFFA25D)** → Enables IR control mode (`control = 2`)  
+  -  **Menu button (0xFFE21D)** → Disables IR mode (`control = 1`)  
+
+- **Device Operations**
+  -  **0xFF6897 / 0xFF30CF** → Turn lights ON / OFF  
+  -  **0xFF18E7 / 0xFF7A85** → Open / Close window  
+  -  **0xFF10EF / 0xFF38C7** → Open / Close door  
+  -  **0xFF5AA5 / 0xFF42BD** → Turn fan ON / OFF  
+
+Each button triggers its respective function (e.g., <code>lighton()</code>, <code>windowopen()</code>, <code>fanoff()</code>) followed by <code>mp3_play()</code> feedback through the DFMini MP3 player, displayed simultaneously on the LCD as status text (e.g., “REMOTE CONTROL ACTIVATED”).
+</p>
+
+
+
+<p align="center">
+  <em>This manual control layer ensures reliability, allowing users to bypass autonomous operations during calibration, testing, or manual overrides while maintaining synchronized visual and audio feedback.</em>
+</p>
+
+### IR Remote Control Demonstration (Video)
+
+<p align="center">
+  ▶️ <a href="https://github.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/blob/c37ea6ba5738418c9c58bafc38a57894d1b57f19/iR%20remote.mp4"><strong>Watch IR Remote Control Demonstration</strong></a>
+  <br>
+  <em>This video shows the IR remote in action — activating manual mode, displaying feedback on the LCD, and controlling the fan, lights, door, and window with corresponding audio prompts.</em>
+</p>
+
+---
+## Voice Command Control
+
+##  Voice Command Control
+
+<p>
+The <strong>Voice Command Mode</strong> introduces a hands-free control mechanism for the Intelligent Home System using the <strong>DFRobot Gravity DF2301Q Voice Recognition Module</strong>.  
+It supports up to 17 custom-trained offline commands, enabling users to operate all connected devices without the internet.  
+The mode activates with the wake phrase <em>“Intelligent Home Design”</em>, followed by direct commands (e.g., “Turn on lights”, “Open window”).  
+Each recognized command triggers the respective hardware function, plays a confirmation sound via the <strong>DFMini MP3</strong>, and displays system status on the <strong>LCD module</strong>.
+</p>
+
+---
+
+###  Activation Process and Hardware Setup
+
+<p align="center">
+  <table>
+    <tr>
+      <td align="center" width="50%">
+        <img src="https://github.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/blob/f133d28b4151f2e312c374e0cab9c9356133f73c/Activate%20voice%20control.png" width="480" alt="Voice Activation Process"/>
+        <br><em>Step-by-step interaction during voice activation and control.</em>
+      </td>
+      <td align="center" width="50%">
+        <img src="https://github.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/blob/f133d28b4151f2e312c374e0cab9c9356133f73c/DF%20gravity%20module.png" width="320" alt="DFRobot Voice Recognition Module"/>
+        <br><em>DFRobot DF2301Q Gravity Voice Recognition Module used for voice control.</em>
+      </td>
+    </tr>
+  </table>
+</p>
+
+---
+
+###  List of Supported Voice Commands
+
+<p align="center">
+  <img src="https://github.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/blob/f133d28b4151f2e312c374e0cab9c9356133f73c/list%20of%20voice%20commands.png" width="700" alt="List of Voice Commands"/>
+  <br><em>Trained voice commands and their corresponding internal command IDs used in the system.</em>
+</p>
+
+---
+
+###  Voice Control Logic Flow
+
+<p align="center">
+  <table>
+    <tr>
+      <td align="center" width="50%">
+        <img src="https://github.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/blob/f133d28b4151f2e312c374e0cab9c9356133f73c/voiceflow1.png" width="430" alt="Voice Flowchart 1"/>
+      </td>
+      <td align="center" width="50%">
+        <img src="https://github.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/blob/f133d28b4151f2e312c374e0cab9c9356133f73c/voice%20flow2.png" width="430" alt="Voice Flowchart 2"/>
+      </td>
+    </tr>
+  </table>
+  <em>Logical flow showing command detection, processing, and device actuation using switch-case mapping.</em>
+</p>
+
+---
+
+###  Voice Command Demonstration (Video)
+
+<p align="center">
+  ▶️ <a href="https://drive.google.com/file/d/1PCoqTj-6_angvoRXnVfJOUrUPeNxITbB/view?usp=sharing" target="_blank"><strong>Watch Voice Command Demonstration</strong></a>
+  <br>
+  <em>This video demonstrates full operation — wake word activation, voice command recognition, LCD feedback, and synchronized MP3 audio responses.</em>
+</p>
+
+---
+
+###  Command Execution Summary
+
+| **Command** | **Device Function** | **Audio Feedback** |
+|--------------|----------------------|--------------------|
+| “Turn on lights” | Activates WS2812B LEDs | “Light On” |
+| “Turn off lights” | Turns off LED lighting | “Light Off” |
+| “Open window” | Opens servo-controlled window | “Window Open” |
+| “Close window” | Closes window servo | “Window Closed” |
+| “Open door” | Opens servo-based main door | “Door Open” |
+| “Close door” | Closes servo door | “Door Closed” |
+| “Turn on fan” | Starts fan via L9110 driver | “Fan On” |
+| “Turn off fan” | Stops fan motor | “Fan Off” |
+
+---
+
+<p align="center">
+  <em>The Voice Command Control adds an intelligent conversational layer to the home system — blending human interaction, offline speech recognition, and smart device synchronization for a seamless and futuristic user experience.</em>
+</p>
+
+
+---
+### How switching works 
+- **IR Remote Control Activation**: Press the IR “Power” button → set <code>control = 2</code> and announce “Manual IR Control Activated.”
+- **IR Remote Control Deactivation**: Press IR “Menu” → set <code>control = 1</code> and announce deactivation.
+- **Enable Voice**: Say wake word → “Enable Voice Control” → set <code>control = 3</code>.
+- **Voice → Autonomous**: Say “Disable Voice Control” → set <code>control = 1</code>.
+
+<details>
+<summary><strong>What each mode controls</strong></summary>
+
+- **Lights**: WS2812B (digital pin, library-driven)
+- **Window**: SG90 servo (defined open/close angles)
+- **Door**: SG90 servo (open/close angles; also used by RFID/Fingerprint block in Security section)
+- **Fan**: DC fan via L9110 (IN1/IN2 drive)
+- **Alarms**: Piezo buzzer + red LED pattern for hazards
+</details>
+
+###  Why this tri-mode design?
+- **Resilience**: If a sensor drifts, you still have IR/Voice to operate safely.
+- **Usability**: Voice is hands-free; IR gives precise button control.
+- **Efficiency & Safety**: Autonomous keeps energy low and reacts instantly to rain, heat, and gas events.
+
+> _Tip_: Keep the LCD messages and MP3 prompts for mode transitions—it helps users know exactly what state the system is in.
+
+
+---
+
+##   System Architecture
+
+###  Microcontroller & Interfaces
 - **MCU:** Arduino Mega 2560  
 - **Communication Buses:**  
   - **I²C:** LCD (16x2 with backpack)  
@@ -267,7 +510,7 @@ Three operating modes allow flexible control and fault tolerance:
 
 ---
 
-### 🧩 Sensor–Actuator Mapping
+###  Sensor–Actuator Mapping
 
 | Sensor / Module | Pin Connection | Actuator / Output | Function |
 |-----------------|----------------|-------------------|-----------|
@@ -297,7 +540,7 @@ Outputs like LEDs, fans, and servos are driven through PWM or digital pins accor
 
 ---
 
-### 🧠 Functional Summary
+###  Functional Summary
 - **Autonomous Mode:** Weather and environment-driven control.  
 - **Manual Mode (IR):** Direct user control via remote.  
 - **Voice Mode:** Wake-word activation + command recognition.  
@@ -308,7 +551,7 @@ Outputs like LEDs, fans, and servos are driven through PWM or digital pins accor
 
 ---
 
-## 🧰 Components Summary
+##  Components Summary
 
 | Category | Components Used |
 |-----------|-----------------|
@@ -322,7 +565,7 @@ Outputs like LEDs, fans, and servos are driven through PWM or digital pins accor
 
 ---
 
-## 🧩 Software & Libraries
+##  Software & Libraries
 
 - **Arduino IDE** (C/C++)  
 - **Libraries Used:**
@@ -339,22 +582,14 @@ Outputs like LEDs, fans, and servos are driven through PWM or digital pins accor
 
 ---
 
-## 🧠 Control Algorithm Summary
+### Complete Circuit Integration
 
-### Automated Control (Mode 1)
-1. Read LDR → Control LEDs  
-2. Read DHT11 → Fan ON if temp ≥ 28 °C  
-3. Read YL-83 → Close windows on rain  
-4. Continuously check MQ-135 → Alert + ventilation if gas detected  
+<p align="center">
+  <img src="https://github.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/blob/f133d28b4151f2e312c374e0cab9c9356133f73c/final%20circuit%20diagarm.png" width="850" alt="Final Circuit Diagram"/>
+  <br>
+  <em>Complete hardware integration for Intelligent Home System — combining autonomous sensing, manual control, audio feedback, and security modules.</em>
+</p>
 
-### Manual Control (Modes 2 & 3)
-- IR remote toggles each device manually.
-- Voice recognition interprets predefined commands:  
-  “Turn on light”, “Open window”, “Lock door”, “Activate fan”, etc.
 
-### Security Flow
-1. Scan RFID card → verify UID  
-2. If valid → unlock door  
-3. If invalid → buzzer alert
 
 
