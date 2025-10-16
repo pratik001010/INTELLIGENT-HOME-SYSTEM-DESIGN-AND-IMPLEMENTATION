@@ -219,6 +219,31 @@ This ensures a prompt reaction to fire or toxic gas incidents.
     </td>
   </tr>
 </table>
+
+
+
+
+
+<p align="center">
+  <table>
+    <tr>
+      <td align="center" width="60%">
+        <img src="https://github.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/blob/23f48f3af7406fc7f87cc7d8aa84f1a4c0db321c/crkt%20with%20fire.png" width="520" alt="Fire Hazard Detection Circuit Diagram"/>
+        <br><em>Fire Hazard Detection Circuit Diagram</em>
+      </td>
+      <td align="center" width="40%">
+        <img src="https://github.com/pratik001010/INTELLIGENT-HOME-SYSTEM-DESIGN-AND-IMPLEMENTATION/blob/23f48f3af7406fc7f87cc7d8aa84f1a4c0db321c/fire.gif" width="300" alt="Fire Detection System Demo"/>
+        <br><em>Fire Detection System Demo</em>
+      </td>
+    </tr>
+  </table>
+</p>
+
+<p align="center">
+
+
+---
+
 ### 🎙️ 4. Control Modes
 Three operating modes allow flexible control and fault tolerance:
 
